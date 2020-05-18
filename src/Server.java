@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Server implements Observer {
+public class Server extends Thread implements Observer {
 
     //Server class fits into Singleton Pattern
     //Iterator will be in this class
@@ -40,24 +40,19 @@ public class Server implements Observer {
             if (currentUser.getAge() >= 25 && currentUser.getAge() <= 60) {
                 // 1. Adım
                 System.out.println("------------");
-                System.out.print("1. Adım: ");
                 System.out.println(currentUser.getName());
 
                 // 2. Adım
-                System.out.println("------------");
-                System.out.print("2. Adım: ");
+                System.out.println("Executing queries:");
                 executeQueries(currentUser);
 
                 // 3. Adım
-                System.out.println("------------");
-                System.out.print("3. Adım: ");
                 System.out.println(currentUser.getAddress());
+                System.out.println("------------");
                 count++;
             }
-
         }
-        System.out.println("------------");
-        System.out.print("4. Adım: ");
+        System.out.println("\n\n------------");
         System.out.println("Count of people: " + count);
 
         return null;
@@ -67,7 +62,6 @@ public class Server implements Observer {
         Random rand = new Random();
         int randomCount = rand.nextInt(3)+1;
 
-        System.out.println("(((( COUNT OF EXECUTIONS : " + randomCount);
         QueryCommand queryCommand = new QueryCommand(user, randomCount);
         queryCommand.Execute();
     }

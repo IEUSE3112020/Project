@@ -11,10 +11,8 @@ public class QueryCommand implements Command {
 
     @Override
     public void Execute() {
-        for (int i = 0; i < count; i++) {
-//            Random rand = new Random();
-//            int operationNumber = rand.nextInt(3)+1;
-            user.Action(3);
+        for (int i = 1; i <= count; i++) {
+            user.Action(i);
         }
     }
 }

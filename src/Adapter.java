@@ -6,20 +6,24 @@ public class Adapter implements Library {
     }
 
     @Override
-    public void receive() {
+    public Object receive(Object o) {
         if (phone instanceof Samsung) {
             ((Samsung) phone).get();
         } else if (phone instanceof Iphone) {
             ((Iphone) phone).read();
         }
+
+        return null;
     }
 
     @Override
-    public void send() {
+    public Object send(Object o) {
         if (phone instanceof Samsung) {
-            ((Samsung) phone).set();
+            return ((Samsung) phone).set(o);
         } else if (phone instanceof Iphone) {
-            ((Iphone) phone).write();
+            return ((Iphone) phone).write(o);
         }
+
+        return null;
     }
 }

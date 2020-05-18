@@ -1,4 +1,4 @@
 public interface Library {
-    public void receive();
-    public void send();
+    public Object receive(Object o);
+    public Object send(Object o);
 }

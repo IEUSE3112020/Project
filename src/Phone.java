@@ -2,20 +2,22 @@ abstract public class Phone { }
 
 class Iphone extends Phone {
     public void read() {
-        System.out.println("reading from iPhone");
+        System.out.println("reading from server");
     }
 
-    public void write() {
-        System.out.println("writing to iPhone");
+    public Object write(Object o) {
+        System.out.println("writing from iPhone to server");
+        return o;
     }
 }
 
 class Samsung extends Phone {
     public void get() {
-        System.out.println("get from samsung");
+        System.out.println("get from server");
     }
 
-    public void set() {
-        System.out.println("set to samsung");
+    public Object set(Object o) {
+        System.out.println("set from Samsung to Server");
+        return o;
     }
 }

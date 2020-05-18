@@ -1,51 +1,47 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
-
-    public static void main(String[] args) throws InterruptedException {
-        List<Condition> conditionList = new ArrayList<>();
-
+    public static void main(String[] args) {
         Server server = Server.getServer();
 
-        String user1PhoneNumber = "05071223053";
-        User user1 = new User("Yağızcan Arslan", 30, "Güzelyalı", new Samsung());
-        user1.Attach(server);
-        server.putToPhoneMap(user1PhoneNumber, user1);
+        for (int i = 0; i < 100; i++) {
+            Client client = new Client(i % 2 == 0 ? new Samsung() : new Iphone());
+            Adapter adapter = new Adapter(client.getPhone());
 
-        user1.putToConditionMap("fever", "Konak");
-        Thread.sleep(2000);
-        user1.putToConditionMap("runny nose", "Narlıdere");
-        Thread.sleep(2000);
-        user1.putToConditionMap("runny nose", "Balçova");
-        Thread.sleep(2000);
-        user1.putToConditionMap("normal", "Güzelyalı");
-        Thread.sleep(2000);
-        user1.putToConditionMap("normal", "Özdere");
-        Thread.sleep(2000);
+            String userPhoneNumber = (String) adapter.send(String.join("", Collections.nCopies(3, String.valueOf(i))));
+            User user = new User("Yağızcan Arslan", i, "Güzelyalı");
 
-        String user2PhoneNumber = "12312312321";
-        User user2 = new User("Berkin Yıldıran", 26, "Narlıdere", new Samsung());
-        user2.Attach(server);
-        server.putToPhoneMap(user2PhoneNumber, user2);
+            User newUser = (User) adapter.send(user);
+            newUser.Attach(server);
 
-        user2.putToConditionMap("runny nose", "Güzelyalı");
-        Thread.sleep(2000);
-        user2.putToConditionMap("runny nose", "Güzelyalı");
-        Thread.sleep(2000);
-        user2.putToConditionMap("fever", "Balçova");
-        Thread.sleep(2000);
-        user2.putToConditionMap("fever", "Balçova");
-        Thread.sleep(2000);
-        user2.putToConditionMap("fever", "Güzelyalı");
+            server.putToPhoneMap(userPhoneNumber, newUser);
 
-        Adapter adapter = new Adapter(user1.getOperatingSystem());
+            user.putToConditionMap(i % 2 == 0 ? "fever" : "runny nose", i % 2 == 0 ? "Konak" : "Güzelyalı");
+            user.putToConditionMap(i % 2 == 0 ? "normal" : "runny nose", i % 2 == 0 ? "Güzelyalı" : "Narlıdere");
+            user.putToConditionMap(i % 2 == 0 ? "runny nose" : "runny nose", i % 2 == 0 ? "Özdere" : "Alsancak");
+            user.putToConditionMap(i % 2 == 0 ? "normal" : "fever", i % 2 == 0 ? "Özdere" : "Güzelyalı");
+            user.putToConditionMap(i % 2 == 0 ? "normal" : "fever", i % 2 == 0 ? "Özdere" : "Narlıdere");
+        }
 
-        adapter.receive();
-        adapter.send();
+        /*Client client2 = new Client(new Iphone());
+        adapter = new Adapter(client2.getPhone());
+
+        userPhoneNumber = (String) adapter.send("5355433370");
+        user = new User("Berkin Yıldıran", 27, "Narlıdere");
+
+        newUser = (User) adapter.send(user);
+        newUser.Attach(server);
+
+        server.putToPhoneMap(userPhoneNumber, newUser);
+
+        user.putToConditionMap("runny nose", "Güzelyalı");
+        user.putToConditionMap("runny nose", "Güzelyalı");
+        user.putToConditionMap("fever", "Balçova");
+        user.putToConditionMap("fever", "Balçova");
+        user.putToConditionMap("fever", "Güzelyalı");*/
 
         server.returnList();
-
-        // sağlık bakanlığı serverına adapter aracılığıyla query gönder
     }
 }
