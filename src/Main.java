@@ -2,43 +2,40 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
-        Server server = Server.getServer();
+        
+    	Server server = Server.getServer();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 80 ; i++) {
             Client client = new Client(i % 2 == 0 ? new Samsung() : new Iphone());
             Adapter adapter = new Adapter(client.getPhone());
 
             String userPhoneNumber = (String) adapter.send(String.join("", Collections.nCopies(3, String.valueOf(i))));
-            User user = new User("YaÄŸÄ±zcan Arslan", i, "GÃ¼zelyalÄ±");
+            User user = new User("Yaðýzcan Arslan", i, "Güzelyalý");
 
             User newUser = (User) adapter.send(user);
             newUser.Attach(server);
 
             server.putToPhoneMap(userPhoneNumber, newUser);
 
-            user.putToConditionMap(i % 2 == 0 ? "fever" : "runny nose", i % 2 == 0 ? "Konak" : "GÃ¼zelyalÄ±");
-            user.putToConditionMap(i % 2 == 0 ? "normal" : "runny nose", i % 2 == 0 ? "GÃ¼zelyalÄ±" : "NarlÄ±dere");
-            user.putToConditionMap(i % 2 == 0 ? "runny nose" : "runny nose", i % 2 == 0 ? "Ã–zdere" : "Alsancak");
-            user.putToConditionMap(i % 2 == 0 ? "normal" : "fever", i % 2 == 0 ? "Ã–zdere" : "GÃ¼zelyalÄ±");
-            user.putToConditionMap(i % 2 == 0 ? "normal" : "fever", i % 2 == 0 ? "Ã–zdere" : "NarlÄ±dere");
+            user.putToConditionMap(i % 2 == 0 ? "fever" : "runny nose", i % 2 == 0 ? "Konak" : "Güzelyalý");
+            user.putToConditionMap(i % 2 == 0 ? "normal" : "runny nose", i % 2 == 0 ? "Güzelyalý" : "Narlýdere");
+            user.putToConditionMap(i % 2 == 0 ? "runny nose" : "runny nose", i % 2 == 0 ? "Özdere" : "Alsancak");
+            user.putToConditionMap(i % 2 == 0 ? "normal" : "fever", i % 2 == 0 ? "Özdere" : "Güzelyalý");
+            user.putToConditionMap(i % 2 == 0 ? "normal" : "fever", i % 2 == 0 ? "Özdere" : "Narlýdere");
         }
 
         /*Client client2 = new Client(new Iphone());
         adapter = new Adapter(client2.getPhone());
-
         userPhoneNumber = (String) adapter.send("5355433370");
-        user = new User("Berkin YÄ±ldÄ±ran", 27, "NarlÄ±dere");
-
+        user = new User("Berkin Yýldýran", 27, "Narlýdere");
         newUser = (User) adapter.send(user);
         newUser.Attach(server);
-
         server.putToPhoneMap(userPhoneNumber, newUser);
-
-        user.putToConditionMap("runny nose", "GÃ¼zelyalÄ±");
-        user.putToConditionMap("runny nose", "GÃ¼zelyalÄ±");
-        user.putToConditionMap("fever", "BalÃ§ova");
-        user.putToConditionMap("fever", "BalÃ§ova");
-        user.putToConditionMap("fever", "GÃ¼zelyalÄ±");*/
+        user.putToConditionMap("runny nose", "Güzelyalý");
+        user.putToConditionMap("runny nose", "Güzelyalý");
+        user.putToConditionMap("fever", "Balçova");
+        user.putToConditionMap("fever", "Balçova");
+        user.putToConditionMap("fever", "Güzelyalý");*/
 
         server.returnList();
     }

@@ -1,6 +1,8 @@
 import java.util.*;
 
-public class Server extends Thread implements Observer {
+// We have implemented Iterator Pattern in this class.
+// Iterates over phoneMap and does the steps in the project description.
+public class Server implements Observer {
 
     //Server class fits into Singleton Pattern
     //Iterator will be in this class
@@ -38,15 +40,15 @@ public class Server extends Thread implements Observer {
             Map.Entry<String, User> currentEntry = iterator.next();
             User currentUser = currentEntry.getValue();
             if (currentUser.getAge() >= 25 && currentUser.getAge() <= 60) {
-                // 1. AdÄ±m
+                // 1. Adým
                 System.out.println("------------");
                 System.out.println(currentUser.getName());
 
-                // 2. AdÄ±m
+                // 2. Adým
                 System.out.println("Executing queries:");
                 executeQueries(currentUser);
 
-                // 3. AdÄ±m
+                // 3. Adým
                 System.out.println(currentUser.getAddress());
                 System.out.println("------------");
                 count++;
