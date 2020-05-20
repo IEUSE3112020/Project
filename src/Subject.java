@@ -1,4 +1,3 @@
-
 // Subject class is an abstract class for concreteSubject which
 // is User class in our project.
 public abstract class Subject {

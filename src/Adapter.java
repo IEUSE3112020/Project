@@ -1,16 +1,16 @@
 public class Adapter implements Library {
-    private Phone phone;
+    private OperatingSystem operatingSystem;
 
-    public Adapter(Phone phone) {
-        this.phone = phone;
+    public Adapter(OperatingSystem os) {
+        this.operatingSystem = os;
     }
 
     @Override
     public Object receive(Object o) {
-        if (phone instanceof Samsung) {
-            ((Samsung) phone).get();
-        } else if (phone instanceof Iphone) {
-            ((Iphone) phone).read();
+        if (operatingSystem instanceof Samsung) {
+            ((Samsung) operatingSystem).get();
+        } else if (operatingSystem instanceof Iphone) {
+            ((Iphone) operatingSystem).read();
         }
 
         return null;
@@ -18,10 +18,10 @@ public class Adapter implements Library {
 
     @Override
     public Object send(Object o) {
-        if (phone instanceof Samsung) {
-            return ((Samsung) phone).set(o);
-        } else if (phone instanceof Iphone) {
-            return ((Iphone) phone).write(o);
+        if (operatingSystem instanceof Samsung) {
+            return ((Samsung) operatingSystem).set(o);
+        } else if (operatingSystem instanceof Iphone) {
+            return ((Iphone) operatingSystem).write(o);
         }
 
         return null;

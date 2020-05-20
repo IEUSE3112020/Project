@@ -6,14 +6,13 @@ public class Main {
     	Server server = Server.getServer();
 
         for (int i = 0; i < 80 ; i++) {
-            Client client = new Client(i % 2 == 0 ? new Samsung() : new Iphone());
-            Adapter adapter = new Adapter(client.getPhone());
+            MobilePhone client = new MobilePhone(i % 2 == 0 ? new Samsung() : new Iphone());
+            Adapter adapter = new Adapter(client.getOperatingSystem());
 
             String userPhoneNumber = (String) adapter.send(String.join("", Collections.nCopies(3, String.valueOf(i))));
             User user = new User("Yağızcan Arslan", i, "Güzelyalı");
 
             User newUser = (User) adapter.send(user);
-            newUser.Attach(server);
 
             server.putToPhoneMap(userPhoneNumber, newUser);
 

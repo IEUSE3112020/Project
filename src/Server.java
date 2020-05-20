@@ -25,6 +25,7 @@ public class Server implements Observer {
 
     public void putToPhoneMap(String phone, User user) {
         phoneMap.put(phone, user);
+        user.Attach(this);
     }
 
     @Override

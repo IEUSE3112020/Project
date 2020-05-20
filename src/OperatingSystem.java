@@ -1,6 +1,6 @@
-abstract public class Phone { }
+abstract public class OperatingSystem { }
 
-class Iphone  extends Phone{
+class Iphone  extends OperatingSystem {
     public void read() {
         System.out.println("reading from server");
     }
@@ -11,7 +11,7 @@ class Iphone  extends Phone{
     }
 }
 
-class Samsung  extends Phone  {
+class Samsung  extends OperatingSystem {
     public void get() {
         System.out.println("get from server");
     }

@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class QueryCommand implements Command {
     private User user;
     private int count;
