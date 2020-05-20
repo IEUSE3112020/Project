@@ -1,40 +1,58 @@
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Main {
+
     public static void main(String[] args) {
-        
-    	Server server = Server.getServer();
+        Random random = new Random();
 
-        for (int i = 0; i < 80 ; i++) {
-            MobilePhone client = new MobilePhone(i % 2 == 0 ? new Samsung() : new Iphone());
-            Adapter adapter = new Adapter(client.getOperatingSystem());
+        // Single server instance
+        Server server = Server.getServer();
 
-            String userPhoneNumber = (String) adapter.send(String.join("", Collections.nCopies(3, String.valueOf(i))));
-            User user = new User("Yaðýzcan Arslan", i, "Güzelyalý");
+        // OS adapters
+        MobilePhone iPhoneClient = new MobilePhone(new Iphone());
+        MobilePhone samsungClient = new MobilePhone(new Samsung());
 
-            User newUser = (User) adapter.send(user);
+        Adapter iphoneAdapter = new Adapter(iPhoneClient.getOperatingSystem());
+        Adapter samsungAdapter = new Adapter(samsungClient.getOperatingSystem());
 
-            server.putToPhoneMap(userPhoneNumber, newUser);
 
-            user.putToConditionMap(i % 2 == 0 ? "fever" : "runny nose", i % 2 == 0 ? "Konak" : "Güzelyalý");
-            user.putToConditionMap(i % 2 == 0 ? "normal" : "runny nose", i % 2 == 0 ? "Güzelyalý" : "Narlýdere");
-            user.putToConditionMap(i % 2 == 0 ? "runny nose" : "runny nose", i % 2 == 0 ? "Özdere" : "Alsancak");
-            user.putToConditionMap(i % 2 == 0 ? "normal" : "fever", i % 2 == 0 ? "Özdere" : "Güzelyalý");
-            user.putToConditionMap(i % 2 == 0 ? "normal" : "fever", i % 2 == 0 ? "Özdere" : "Narlýdere");
+        /* */
+        String userPhoneNumber;
+        User user;
+
+        // count of users to be generated
+        int userCount = 1000;
+
+        // a random number to choose what operating system the user will use
+        int randomNumber;
+
+        // Users gets generated randomly by the utility class UserGenerator
+        for(int i=0; i<userCount; i++) {
+            randomNumber = random.nextInt(2);
+            user = new User(UserGenerator.nameGenerator() +" " + UserGenerator.surnameGenerator(), random.nextInt(70), UserGenerator.locationGenerator());
+            if (randomNumber == 1) {
+                userPhoneNumber = (String) iphoneAdapter.send(UserGenerator.numberGenerator());
+                // mock user registration of phone number to the server
+                iphoneAdapter.send(user);
+            }
+            else {
+                userPhoneNumber = (String) samsungAdapter.send(UserGenerator.numberGenerator());
+                // mock user registration of phone number to the server
+                samsungAdapter.send(user);
+            }
+
+            // mock user filling up a registration form, and save the user into a map, associated with their phone numbers
+            // this also attaches the User to the Server, as the Server will listen to User's condition updates
+            server.putToPhoneMap(userPhoneNumber, user);
+
+            // mock User entering their condition info
+            // ama o
+            for(int j=0; j<=random.nextInt(3); j++) {
+                user.putToConditionMap(UserGenerator.conditionGenerator(), UserGenerator.locationGenerator());
+            }
         }
 
-        /*Client client2 = new Client(new Iphone());
-        adapter = new Adapter(client2.getPhone());
-        userPhoneNumber = (String) adapter.send("5355433370");
-        user = new User("Berkin Yýldýran", 27, "Narlýdere");
-        newUser = (User) adapter.send(user);
-        newUser.Attach(server);
-        server.putToPhoneMap(userPhoneNumber, newUser);
-        user.putToConditionMap("runny nose", "Güzelyalý");
-        user.putToConditionMap("runny nose", "Güzelyalý");
-        user.putToConditionMap("fever", "Balçova");
-        user.putToConditionMap("fever", "Balçova");
-        user.putToConditionMap("fever", "Güzelyalý");*/
 
         server.returnList();
     }

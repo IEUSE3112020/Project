@@ -8,8 +8,6 @@ public class Server implements Observer {
     //Iterator will be in this class
     private static Server server = new Server();
 
-    // TODO
-    // userList or phoneList???
     private Map<String, User> phoneMap;
     private Server(){
         phoneMap = new HashMap<>();
@@ -33,7 +31,7 @@ public class Server implements Observer {
         System.out.println("Received condition info update from " + subject);
     }
 
-    public List<User> returnList() {
+    public void returnList() {
         Iterator<Map.Entry<String, User>> iterator = phoneMap.entrySet().iterator();
         int count = 0;
 
@@ -41,24 +39,24 @@ public class Server implements Observer {
             Map.Entry<String, User> currentEntry = iterator.next();
             User currentUser = currentEntry.getValue();
             if (currentUser.getAge() >= 25 && currentUser.getAge() <= 60) {
-                // 1. Adým
+                // First Step
                 System.out.println("------------");
                 System.out.println(currentUser.getName());
 
-                // 2. Adým
+                // Second Step
                 System.out.println("Executing queries:");
                 executeQueries(currentUser);
 
-                // 3. Adým
+                // Third Step
                 System.out.println(currentUser.getAddress());
                 System.out.println("------------");
                 count++;
             }
         }
         System.out.println("\n\n------------");
+        // Fourth Step
         System.out.println("Count of people: " + count);
 
-        return null;
     }
 
     private void executeQueries(User user) {
